@@ -284,11 +284,10 @@ end)
 
 Section2:CreateLabel("Boats")
 
-local Slider1 = Section2:CreateSlider("Boat Speed", 0,1000,nil,true, function(Value)
+local Slider1 = Section2:CreateSlider("Boat Speed", 0,150,nil,true, function(Value)
  for i, v in pairs(game.Workspace:GetChildren()) do
         if v.Name == (game.Players.LocalPlayer.Name .. "'s Boat") then
              v.Controller.VehicleSeat.MaxSpeed = tonumber(value)
-             v.TakeDamage:Destroy()
          end
     end   
 end)
