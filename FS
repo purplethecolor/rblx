@@ -165,9 +165,17 @@ end)
 local Toggle3 = Section1:CreateToggle("Remove Fog", nil, function(State)
     toggle = State
         while toggle do
+        if  game.Lighting.FogEnd == 100 then
+         game.Lighting.FogEnd = 1000000
+        end
             game.Lighting.FogEnd = 1000000
             game.Lighting.GlobalLighting:Destroy()
-            game.Lighting.Atmosphere:Destroy()            
+            game.Lighting.Atmosphere:Destroy()     
+             game.Lighting.Lighting:Destroy()  
+              game.Lighting.ColorCorrection:Destroy()     
+               game.Lighting.Bloom:Destroy()     
+                game.Lighting.Blur:Destroy()     
+                 game.Lighting.Atmosphere:Destroy()                 
         end
 end)
 
