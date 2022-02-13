@@ -340,14 +340,6 @@ end)
 
 Section2:CreateLabel("Misc")
 
-local Toggle7 = Section2:CreateToggle("UI Toggle", nil, function(State)
-	Window:Toggle(State)
-	
-Toggle7:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key)
-	Config.Keybind = Enum.KeyCode[Key]
-end)	
-end)
-Toggle7:SetState(true)
 
 local Button8 = Section2:CreateButton("Instant ProximityPrompt", function()
 game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(prompt)
@@ -370,3 +362,13 @@ EquipTool()
 game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(character)
     EquipTool()
 end)
+
+local Toggle7 = Section2:CreateToggle("UI Toggle", nil, function(State)
+	Window:Toggle(State)
+end)
+
+Toggle7:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key)
+	Config.Keybind = Enum.KeyCode[Key]
+end)	
+Toggle7:SetState(true)
+
