@@ -1,5 +1,5 @@
 local Config = {
-    WindowName = "version 2.0",
+    WindowName = "version 2.1",
     Color = Color3.fromRGB(182,41,243),
     Keybind = Enum.KeyCode.RightBracket
 }
@@ -146,6 +146,86 @@ end)
 
 Section1:CreateLabel("Farming")
 
+local Toggle6 = Section1:CreateToggle("Auto Kill", nil, function(State)
+    shared.toggle = State
+     if shared.toggle == true then
+    fuckMonster = RunService.Stepped:Connect(function()
+     for i, v in pairs(game.Workspace:GetChildren()) do
+     if v:FindFirstChild("Health") and v:FindFirstChild("IsSeaMonster") and v.Name == "GreatWhiteShark" or v.Name == "BigGreatWhiteShark" or v.Name == "KillerWhale" or v.Name == "NeonGreatWhiteShark" or v.Name == "MobyWood" or v.Name == "NeonKillerWhale" then
+        if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+                 
+                
+                    for i, getTools in pairs(player.Character:GetChildren()) do
+                        if getTools:IsA("Tool") and  getTools:FindFirstChild("GripC1") then
+                            plrTools = getTools.Name
+                        end
+                    end
+                 
+                    teleport(v.HumanoidRootPart.CFrame + Vector3.new(0, 30, 0))
+                    wait(1)
+                    game:GetService("ReplicatedStorage").CloudFrameShared.DataStreams.MonsterHit:FireServer(workspace[v.Name], tostring(plrTools), true)
+                    break
+                elseif not game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+                    EquipTool()
+               break
+            end
+        end
+     end
+     end)
+    else
+         fuckMonster:Disconnect()
+          teleport(CFrame.new(1.8703980445862, 53.57190322876, -188.37982177734))
+        end
+end)
+
+
+local Toggle8 = Section1:CreateToggle("Auto Remove Drop [2 minutes]", nil, function(State)
+    toggle = State
+     if toggle then
+        while toggle do 
+            wait(120)
+            for i, v in pairs(game.Workspace.DroppedItems:GetChildren()) do
+                if v:IsA("Model") then
+                    v:Destroy()
+                end
+            end
+        end
+      end
+end)
+
+local Toggle10 = Section1:CreateToggle("Auto Lock Rare Items", nil, function(State)
+    toggle = State
+     if toggle then
+        while toggle do 
+            wait(.1)
+for i, v in pairs(game.Players.LocalPlayer.PlayerGui.Interface.Inventory.Inventory.Frame.Backpack.List.Container:GetChildren()) do
+        if string.match(v.Name, "key") then
+            for i, model in pairs(v:GetDescendants()) do
+                if model:IsA("Tool") then
+                    if model.RarityLevel.Value >= 4 then
+                        
+                        if v.DraggableComponent.Contents.LockIcon.Visible == false then
+                            print(v.Name, model.Name, model.RarityLevel.Value)
+                        local args = {
+                            [1] = "Tools",
+                            [2] = v.Name,
+                            [3] = true
+                        }
+                        game:GetService("ReplicatedStorage").CloudFrameShared.DataStreams.SetInventoryItemLock:InvokeServer(unpack(args))
+                                                    
+                        end
+                    end
+                end
+            end
+        end
+end
+            
+        end
+      end
+end)
+
+Toggle10:AddToolTip("Rarity Locked: \nEpic \nLegendary \nEvent \nSecret")
+
 local Toggle1 = Section1:CreateToggle("Auto Caught", nil, function(State)
 toggle = State
     while toggle do
@@ -179,10 +259,25 @@ local Toggle3 = Section1:CreateToggle("Remove Fog", nil, function(State)
         end
 end)
 
+Section1:CreateLabel("Chest")
+
 local Toggle4 = Section1:CreateToggle("Daily Chest", nil, function(State)
     toggle = State
         while toggle do
                 for i, v in pairs(game.Workspace.Islands:GetDescendants()) do
+                    if v:IsA("Model") and string.match(v.Name, "Chest") then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+                        wait(1)
+                        fireproximityprompt(v.HumanoidRootPart.ProximityPrompt)
+                    end
+                end            
+        end
+end)
+
+local Toggle9 = Section1:CreateToggle("Random Chest", nil, function(State)
+    toggle = State
+        while toggle do
+                for i, v in pairs(game.Workspace.RandomChests:GetDescendants()) do
                     if v:IsA("Model") and string.match(v.Name, "Chest") then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
                         wait(1)
@@ -212,42 +307,11 @@ local Toggle5 = Section1:CreateToggle("Suken Chest", nil, function(State)
         end
 end)
 
-local Toggle6 = Section1:CreateToggle("Auto Kill", nil, function(State)
-    shared.toggle = State
-     if shared.toggle == true then
-    fuckMonster = RunService.Stepped:Connect(function()
-     for i, v in pairs(game.Workspace:GetChildren()) do
-     if v:FindFirstChild("Health") and v:FindFirstChild("IsSeaMonster") and v.Name == "GreatWhiteShark" or v.Name == "BigGreatWhiteShark" or v.Name == "KillerWhale" or v.Name == "NeonGreatWhiteShark" or v.Name == "MobyWood" or v.Name == "NeonKillerWhale" then
-        if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
-                 
-                
-                    for i, getTools in pairs(player.Character:GetChildren()) do
-                        if getTools:IsA("Tool") and  getTools:FindFirstChild("GripC1") then
-                            plrTools = getTools.Name
-                        end
-                    end
-                 
-                    teleport(v.HumanoidRootPart.CFrame + Vector3.new(0, 30, 0))
-                    wait(1)
-                    game:GetService("ReplicatedStorage").CloudFrameShared.DataStreams.MonsterHit:FireServer(workspace[v.Name], tostring(plrTools), true)
-                    break
-                elseif not game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
-                    EquipTool()
-               break
-            end
-        end
-     end
-     end)
-    else
-         fuckMonster:Disconnect()
-          teleport(CFrame.new(1.8703980445862, 53.57190322876, -188.37982177734))
-        end
-end)
 
 ---------------------------------------------------------------------
-Section1:CreateLabel("Utilities")
+Section1:CreateLabel("Teleport")
 
-local Dropdown2 = Section1:CreateDropdown("Store", {"Boat Store","Raygan's Tavern","Supplies Store", "Pets Store", "Suken Ship"}, function(String)
+local Dropdown2 = Section1:CreateDropdown("Store", {"Boat Store","Raygan's Tavern","Supplies Store", "Pets Store"}, function(String)
     locationSelected = String
 end)
 
@@ -260,17 +324,10 @@ local Button1 = Section1:CreateButton("Teleport", function()
             game:GetService("ReplicatedStorage").CloudFrameShared.DataStreams.EnterDoor:InvokeServer("SuppliesStoreInterior", "Inside")  
         elseif locationSelected == "Pets Store" then
             game:GetService("ReplicatedStorage").CloudFrameShared.DataStreams.EnterDoor:InvokeServer("PetShop", "MainEntrance")
-        elseif locationSelected == "Suken Ship" then
-             for i, v in pairs(game.Workspace:GetChildren()) do
-                if string.find(v.Name, "ShipModel") then
-                        teleport(v.HitBox.CFrame)
-                    break
-                 end
-              end        
     end
 end)
 
-local Dropdown3 = Section1:CreateDropdown("Location", {"Port Jackson","Ancient Shores","Shadow Isles", "Pharaoh's Dunes", "Eruption Island", "Monster's Borough"}, function(String)
+local Dropdown3 = Section1:CreateDropdown("Location", {"Port Jackson","Ancient Shores","Shadow Isles", "Pharaoh's Dunes", "Eruption Island", "Monster's Borough", "Suken Ship"}, function(String)
     locationSelected = String
 end)
 
@@ -286,7 +343,14 @@ local Button2 = Section1:CreateButton("Teleport", function()
         elseif locationSelected == "Eruption Island" then
         teleport(CFrame.new(3022.9311523438, 52.347640991211, 1323.74609375))
         elseif locationSelected == "Monster's Borough" then
-        teleport(CFrame.new(-3211.9047851562, 41.850345611572, 2735.306640625))                 
+        teleport(CFrame.new(-3211.9047851562, 41.850345611572, 2735.306640625))  
+        elseif locationSelected == "Suken Ship" then
+             for i, v in pairs(game.Workspace:GetChildren()) do
+                if string.find(v.Name, "ShipModel") then
+                        teleport(v.HitBox.CFrame)
+                    break
+                 end
+              end                               
     end
 end)
 
@@ -360,18 +424,17 @@ setclipboard("HUnTFaE4H6")
 end)
 
 local Toggle7 = Section2:CreateToggle("UI Toggle", nil, function(State)
-	Window:Toggle(State)
+    Window:Toggle(State)
 end)
 
 Toggle7:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key)
-	Config.Keybind = Enum.KeyCode[Key]
-end)	
+    Config.Keybind = Enum.KeyCode[Key]
+end)    
 Toggle7:SetState(true)
 
 EquipTool()
 game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(character)
     EquipTool()
 end)
-
 
 
