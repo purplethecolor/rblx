@@ -342,10 +342,10 @@ Section2:CreateLabel("Misc")
 
 local Toggle7 = Section2:CreateToggle("UI Toggle", nil, function(State)
 	Window:Toggle(State)
-end)
-
+	
 Toggle7:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key)
 	Config.Keybind = Enum.KeyCode[Key]
+end)	
 end)
 Toggle7:SetState(true)
 
