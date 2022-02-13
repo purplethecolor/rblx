@@ -340,6 +340,10 @@ end)
 
 Section2:CreateLabel("Misc")
 
+local Toggle7 = Section2:CreateToggle("UI Toggle", nil, function(State)
+	Window:Toggle(State)
+end)
+
 local Button8 = Section2:CreateButton("Instant ProximityPrompt", function()
 game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(prompt)
    prompt.HoldDuration = 0
