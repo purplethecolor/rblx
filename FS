@@ -358,10 +358,6 @@ end)
 local Button7 = Section2:CreateButton("Discord", function()
 setclipboard("HUnTFaE4H6") 
 end)
-EquipTool()
-game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(character)
-    EquipTool()
-end)
 
 local Toggle7 = Section2:CreateToggle("UI Toggle", nil, function(State)
 	Window:Toggle(State)
@@ -371,4 +367,11 @@ Toggle7:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), functi
 	Config.Keybind = Enum.KeyCode[Key]
 end)	
 Toggle7:SetState(true)
+
+EquipTool()
+game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(character)
+    EquipTool()
+end)
+
+
 
