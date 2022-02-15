@@ -1,5 +1,5 @@
 local Config = {
-    WindowName = "version 2.1",
+    WindowName = "version 2.2",
     Color = Color3.fromRGB(182,41,243),
     Keybind = Enum.KeyCode.RightBracket
 }
@@ -229,7 +229,7 @@ Toggle10:AddToolTip("Rarity Locked: \nEpic \nLegendary \nEvent \nSecret")
 local Toggle1 = Section1:CreateToggle("Auto Caught", nil, function(State)
 toggle = State
     while toggle do
-        wait(2.6)
+        wait(math.random(4,6)
         game:GetService("ReplicatedStorage").CloudFrameShared.DataStreams.FishCaught:FireServer()
     end
 end)
