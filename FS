@@ -469,4 +469,4 @@ game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(character
     EquipTool()
 end)
 
-
+--Hi
