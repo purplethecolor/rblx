@@ -1,0 +1,82 @@
+local Config = {
+    WindowName = "Anime Battle Tycoon",
+    Color = Color3.fromRGB(182,41,243),
+    Keybind = Enum.KeyCode.RightShift
+}
+
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/AlexR32/Roblox/main/BracketV3.lua"))()
+local Window = Library:CreateWindow(Config, game:GetService("CoreGui"))
+
+local Tab1 = Window:CreateTab("Main")
+
+
+local Section1 = Tab1:CreateSection("Cheats")
+local Section2 = Tab1:CreateSection("Credits")
+
+local player = game.Players.LocalPlayer
+
+local RunService = game:GetService("RunService")
+local vim = game:service("VirtualInputManager")
+
+local heroSelect
+local autoPunch
+
+    function teleport(loc)
+        bLocation = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        if game.Players.LocalPlayer.Character.Humanoid.Sit then
+            game.Players.LocalPlayer.Character.Humanoid.Sit = false
+        end
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = loc
+    end
+
+             for i,v in pairs(game.Workspace.Stands:GetDescendants()) do
+          if v:IsA("ProximityPrompt") then
+              v.MaxActivationDistance = 9999
+          end
+        end
+
+local Dropdown1 = Section1:CreateDropdown("Hero", {"Naruto","Luffy","Goku", "You"}, function(String)
+    heroSelect = String
+end)
+
+local Button1 = Section1:CreateButton("Choose", function()
+        if heroSelect == "Naruto" then
+        fireproximityprompt(game.Workspace.Stands["1"].Position.Proximity["1"])    
+        elseif heroSelect == "Goku" then
+        fireproximityprompt(game.Workspace.Stands["2"].Position.Proximity["2"])
+        elseif heroSelect == "Luffy" then  
+        fireproximityprompt(game.Workspace.Stands["3"].Position.Proximity["3"])    
+        elseif heroSelect == "You" then
+        fireproximityprompt(game.Workspace.Stands["4"].Position.Proximity["4"])
+        end
+end)
+
+
+
+local Button2 = Section1:CreateButton("Farm Freeza", function()
+teleport(CFrame.new(3.97003173828125, 8.523852348327637, -9.570223808288574))
+end)
+
+local Toggle1 = Section1:CreateToggle("Auto Attack", nil, function(autoAttack)
+    toggle = autoAttack
+        if toggle then
+            autoPunch = RunService.Stepped:Connect(function() 
+                local args = {[1] = "RequestAction", [2] = "Combat",[3] = "Combat"}
+                game:GetService("ReplicatedStorage").Modules.ServiceLoader.NetworkService.Events.Objects.UpdateMelee:FireServer(unpack(args))
+            end)
+        else
+            autoPunch:Disconnect()
+        end
+end)
+
+Section2:CreateLabel("Credits : Purples")
+Section2:CreateLabel("v3rmillion.net : Purples")
+Section2:CreateLabel("Discord Purple#0666")
+Section2:CreateLabel("UI Lib : AlexR32")
